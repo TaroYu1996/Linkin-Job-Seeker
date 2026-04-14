@@ -1,2 +1,111 @@
 # Linkin-Job-Seeker
-Skill for Linkedin Job seeker
+
+`Linkin-Job-Seeker` is a reusable OpenClaw/QClaw skill workspace for monitoring LinkedIn job search results with a **profile-driven** pipeline.
+
+The main skill is:
+
+- `linkedin-job-monitor/`
+
+It supports:
+
+- authenticated LinkedIn job search fetching
+- deterministic normalization and filtering
+- deduplication against prior runs
+- ranking/scoring by profile preferences
+- concise internal chat digest output
+
+---
+
+## Repository Structure
+
+```text
+linkedin-job-monitor/
+  SKILL.md
+  agents/openai.yaml
+  references/
+    setup-flow.md
+    first-time-conversation-template.md
+    filter-schema.md
+    scoring-rules.md
+    dedupe-policy.md
+    output-format.md
+  scripts/
+    config_schema.py
+    collect_profile.py
+    fetch_linkedin_jobs.py
+    normalize_jobs.py
+    apply_filters.py
+    dedupe_jobs.py
+    score_jobs.py
+    summarize_matches.py
+    run_monitor.py
+```
+
+---
+
+## Quick Start
+
+### 1) Prepare a profile
+
+Use `scripts/config_schema.py` + `scripts/collect_profile.py` to build or update a profile object:
+
+- Required:
+  - `search_url`
+  - `target_roles`
+  - `regions`
+  - `allowed_location_types`
+- Optional:
+  - salary constraints
+  - seniority
+  - title/JD keyword constraints
+  - company allow/deny lists
+  - digest and scheduling controls
+
+### 2) Provide an authenticated LinkedIn session adapter
+
+`scripts/fetch_linkedin_jobs.py` defines `LinkedInSessionAdapter` protocol.  
+Plug in your runtime implementation (Playwright/Selenium/hosted browser session).
+
+### 3) Run the monitor pipeline
+
+Call `run_monitor(...)` from `scripts/run_monitor.py`:
+
+1. fetch
+2. normalize
+3. filter
+4. dedupe
+5. score
+6. summarize
+
+---
+
+## Development Notes
+
+- Filtering and ranking are profile-driven (avoid hardcoded role logic).
+- Keep runtime-specific browser behavior inside the fetch layer.
+- Persist profile state and dedupe state externally (JSON, DB, KV, etc.).
+- For user testing, use the bilingual first-time chat script in `linkedin-job-monitor/references/first-time-conversation-template.md`.
+
+---
+
+## Validation
+
+You can run basic script validation with:
+
+```bash
+python -m compileall linkedin-job-monitor/scripts
+```
+
+---
+
+## Legal & Compliance Notes
+
+- This project is not affiliated with LinkedIn.
+- Ensure usage complies with LinkedIn Terms of Service, local law, and your organization’s policies.
+- Do not commit sensitive personal data, cookies, tokens, or private profile identifiers.
+
+---
+
+## License
+
+This repository is licensed under the MIT License. See [LICENSE](./LICENSE).
