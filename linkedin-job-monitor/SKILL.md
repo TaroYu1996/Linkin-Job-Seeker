@@ -34,6 +34,7 @@ Use this skill to run an end-to-end LinkedIn job monitoring flow with reusable p
 ## Resource map
 
 - Setup guidance: `references/setup-flow.md`
+- First-time bilingual conversation template: `references/first-time-conversation-template.md`
 - Profile schema semantics: `references/filter-schema.md`
 - Ranking approach: `references/scoring-rules.md`
 - Dedupe behavior: `references/dedupe-policy.md`

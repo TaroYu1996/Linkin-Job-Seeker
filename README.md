@@ -24,6 +24,7 @@ linkedin-job-monitor/
   agents/openai.yaml
   references/
     setup-flow.md
+    first-time-conversation-template.md
     filter-schema.md
     scoring-rules.md
     dedupe-policy.md
@@ -83,6 +84,7 @@ Call `run_monitor(...)` from `scripts/run_monitor.py`:
 - Filtering and ranking are profile-driven (avoid hardcoded role logic).
 - Keep runtime-specific browser behavior inside the fetch layer.
 - Persist profile state and dedupe state externally (JSON, DB, KV, etc.).
+- For user testing, use the bilingual first-time chat script in `linkedin-job-monitor/references/first-time-conversation-template.md`.
 
 ---
 
